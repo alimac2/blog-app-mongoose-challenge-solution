@@ -88,11 +88,11 @@ function seedBlogPostData() {
                 res = _res;
                 res.should.have.status(200);
      
-                res.body.blogposts.should.have.length.of.at.least(1);
+                res.body.should.have.length.of.at.least(1);
                 return BlogPost.count();
                 })
                 .then(function(count) {
-                  res.body.blogposts.should.have.length.of(count);
+                  res.body.should.have.length.of(count);
                 });
         }); //is it okay to add blogposts within the then?
   
@@ -113,7 +113,7 @@ function seedBlogPostData() {
             blogpost.should.include.keys(
               'id', 'title', 'content', 'author', 'publishDate');
           });
-          resBlogPost = res.body.blogposts[0];  //in solution why no blogposts?
+          resBlogPost = res.body[0];  //in solution why no blogposts?
           return BlogPost.findById(resBlogPost.id);
         })
         .then(function(blogpost) {
@@ -150,7 +150,7 @@ describe('POST endpoint', function() {
         res.body.content.should.equal(newBlogPost.content);
         res.body.author.should.equal(newBlogPost.author);
 
-        return BlogPoste.findById(res.body.id);
+        return BlogPost.findById(res.body.id);
       })
       .then(function(blogpost) {
         blogpost.id.should.equal(blogpost.id);
